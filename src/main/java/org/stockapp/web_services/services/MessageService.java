@@ -1,6 +1,7 @@
 package org.stockapp.web_services.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -60,9 +61,38 @@ public class MessageService {
 	}
 	
 	public void generateMessage(){
-		for(int i=1; i<=2; i++) {
+		for(int i=1; i<=10; i++) {
 			Message message = new Message(i, "Hello Guys! this is the message n°: " +i, "Laurenzio Sambany");
 			messages.put(message.getId(), message);
 		}
 	}
+	
+	/**
+	 *Pagination & Filter 
+	 **/
+	
+	public List<Message> getMessagesbyYear(int year){
+		List<Message> messagesbyYear = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		
+		for(Message message: messages.values()) {
+			//get the message's created property & parse it
+			cal.setTime(message.getCreated());
+			if(cal.get(Calendar.YEAR) == year) {
+				messagesbyYear.add(message);
+			}
+		}
+		
+		return messagesbyYear;
+	}
+	
+	public List<Message> getAllMessagesPaginated(int start, int size){
+		List<Message> all_messages = new ArrayList<Message>(messages.values());
+		
+		if(start + size > all_messages.size()) {
+			return all_messages;
+		}
+		return all_messages.subList(start, start + size);
+	}
+	
 }

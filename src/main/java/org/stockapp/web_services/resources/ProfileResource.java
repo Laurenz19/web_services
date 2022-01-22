@@ -16,7 +16,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("profiles")
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProfileResource {
 	
@@ -41,12 +40,14 @@ public class ProfileResource {
 	}
 	
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Profile addProfile(Profile profile) {
 		return profileService.addProfile(profile);
 	}
 	
 	@PUT
 	@Path("/{username}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Profile updateProfile(Profile profile,@PathParam("username") String username) {
 		return profileService.updateProfile(profile, username);
 	}
