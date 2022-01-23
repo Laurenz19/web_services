@@ -76,4 +76,10 @@ public class messageResource {
 		this.messageService.generateMessage();
 		return "this request generate messages and get the param: \""+ param + "\"";
 	}
+	
+	
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource() {
+		return new CommentResource();
+	}
 }
