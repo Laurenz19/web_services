@@ -3,13 +3,18 @@ package org.stockapp.web_services.resources;
 import java.util.List;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.MatrixParam;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.PathSegment;
+import jakarta.ws.rs.core.UriInfo;
 
 @Path("demo")
 @Consumes(MediaType.TEXT_PLAIN)
@@ -48,7 +53,6 @@ public class DemoResource {
 	 **/
 	@GET
 	@Path("{var:.+}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public String getListOfMatrixParam(@PathParam("var") List<PathSegment> ps) {
 		 String temp = "";
 	        for (PathSegment pathSegment : ps) {
@@ -60,6 +64,25 @@ public class DemoResource {
 	        return info;
 	}
 	
+	/**
+	 * Get The header parameter 
+	 * & the Cookie
+	 **/
+	@GET
+	@Path("annotation/header")
+	public String getHeader(@HeaderParam("AuthSessionId") String session, @CookieParam("name") String cookie) {
+		return String.format("Header param : %s <br/> Cookie param : %s <br/>", session, cookie);
+	}
+	
+	/**
+	 * About ContextParam annotation
+	 * it injects 12 objects instance related to HTTP request.
+	 **/
+	@GET
+	@Path("context")
+	public String getContext(@Context UriInfo uriInfo, @Context HttpHeaders header) {
+		return "uriInfo uri : " + uriInfo.getAbsolutePath().toString() + " & Header : " + header.toString();
+	}
 	
 	
 	

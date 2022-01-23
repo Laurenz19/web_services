@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.stockapp.web_services.model.Message;
+import org.stockapp.web_services.resources.beans.MessageFilterBean;
 import org.stockapp.web_services.services.MessageService;
 
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -14,7 +16,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("messages")
@@ -24,15 +25,15 @@ public class messageResource {
 	MessageService messageService = new MessageService();
 	
 	@GET
-	public List<Message> getMessages(@QueryParam("year") int year, @QueryParam("start") int start, @QueryParam("size") int size) {
+	public List<Message> getMessages(@BeanParam MessageFilterBean filterBean) {
 		List<Message> messages = new ArrayList<>();
 		
-		if(year == 0 && start == 0 && size ==0) {
+		if(filterBean.getYear() == 0 && filterBean.getStart() == 0 && filterBean.getSize() ==0) {
 			messages = this.messageService.getAllMessages();
-		}else if(year > 0 && start == 0 && size ==0) {
-			messages = this.messageService.getMessagesbyYear(year);
-		}else if(year == 0 && start >= 0 || size >=0){
-			messages = this.messageService.getAllMessagesPaginated(start, size);
+		}else if(filterBean.getYear() > 0 && filterBean.getStart() == 0 && filterBean.getSize() ==0) {
+			messages = this.messageService.getMessagesbyYear(filterBean.getYear());
+		}else if(filterBean.getYear() == 0 && filterBean.getStart() >= 0 || filterBean.getSize() >=0){
+			messages = this.messageService.getAllMessagesPaginated(filterBean.getStart(), filterBean.getSize());
 		}
 		return messages;
 	}
