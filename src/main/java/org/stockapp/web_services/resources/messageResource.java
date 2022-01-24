@@ -3,6 +3,7 @@ package org.stockapp.web_services.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+//import org.stockapp.web_services.model.Comment;
 import org.stockapp.web_services.model.Message;
 import org.stockapp.web_services.resources.beans.MessageFilterBean;
 import org.stockapp.web_services.services.MessageService;
@@ -71,10 +72,9 @@ public class messageResource {
 	 **/
 	@GET
 	@Path("generate/{param}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getParams(@PathParam("param") String param) {
-		this.messageService.generateMessage();
-		return "this request generate messages and get the param: \""+ param + "\"";
+	public List<Message> getParams(@PathParam("param") String param) {
+		//"this request generate messages and get the param: \""+ param + "\"";
+		return this.messageService.generateMessage();
 	}
 	
 	

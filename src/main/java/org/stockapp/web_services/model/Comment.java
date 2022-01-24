@@ -8,9 +8,11 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class Comment {
 	
 	private Long id;
-	private String message;
+	private String content;
 	private Date created;
 	private String author;
+	private Message message;
+	
 	
 	/**
 	 * non argument constructor
@@ -22,8 +24,8 @@ public class Comment {
 	/**
 	 * constructor 
 	 **/
-	public Comment(String message, String author) {
-		this.message = message;
+	public Comment(String content, String author) {
+		this.content = content;
 		this.author = author;
 		this.created = new Date();
 	}
@@ -36,12 +38,12 @@ public class Comment {
 		this.id = id;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getContent() {
+		return content;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Date getCreated() {
@@ -59,5 +61,13 @@ public class Comment {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
+
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
 }

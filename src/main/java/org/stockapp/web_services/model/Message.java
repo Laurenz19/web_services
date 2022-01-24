@@ -19,7 +19,7 @@ public class Message {
 	private String message;
 	private Date created;
 	private String author;
-	private Map<Long, Comment> comments = new HashMap<>();
+	private Map<Long, Comment> comments; 
 	
 
 	//no argument constructor
@@ -36,6 +36,7 @@ public class Message {
 		this.message = message;
 		this.author = author;
 		this.created = new Date();
+		this.comments = new HashMap<>();
 	}
 	
 	/**
@@ -73,13 +74,23 @@ public class Message {
 		this.author = author;
 	}
 	
+	
+	/**
+	 * Return Collection | Comment 
+	 **/
 	@XmlTransient
 	public Map<Long, Comment> getComments() {
 		return comments;
 	}
-
-	public void setComments(Map<Long, Comment> comments) {
-		this.comments = comments;
+	
+	public Comment addComment(Comment comment) {
+		//comment.setMessage(this);
+		this.comments.put(comment.getId(), comment);
+		return this.comments.get(comment.getId());
+	}
+	
+	public Comment removeComment(Comment comment) {
+		return this.comments.remove(comment.getId()); 
 	}
 	
 	

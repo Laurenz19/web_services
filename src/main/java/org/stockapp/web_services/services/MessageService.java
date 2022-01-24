@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.stockapp.web_services.database.Database;
+import org.stockapp.web_services.model.Comment;
 import org.stockapp.web_services.model.Message;
 
 /**
@@ -32,7 +33,7 @@ public class MessageService {
 		return new ArrayList<Message>(messages.values());
 	}
 	
-	public Message getMessage(long id) {
+	public Message getMessage(Long id) {
 		return messages.get(id);
 	}
 	
@@ -60,11 +61,18 @@ public class MessageService {
 		return new ArrayList<Message>(messages.values());
 	}
 	
-	public void generateMessage(){
+	public List<Message> generateMessage(){
+		
 		for(int i=1; i<=10; i++) {
 			Message message = new Message(i, "Hello Guys! this is the message n°: " +i, "Laurenzio Sambany");
 			messages.put(message.getId(), message);
+			for(int n=1; n<3; n++) {
+				Comment comment = new Comment("Message -"+ n, "laurenzio");
+				message.addComment(comment);
+			}
 		}
+		
+		return new ArrayList<Message>(messages.values());
 	}
 	
 	/**
