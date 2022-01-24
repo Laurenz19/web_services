@@ -78,6 +78,10 @@ public class messageResource {
 	}
 	
 	
+	/**
+	 * Here we implement the sub-resource
+	 * it is annotated with Path annotation but no with HTTP method 
+	 **/
 	@Path("/{messageId}/comments")
 	public CommentResource getCommentResource() {
 		return new CommentResource();
