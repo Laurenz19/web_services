@@ -84,7 +84,6 @@ public class Message {
 	}
 	
 	public Comment addComment(Comment comment) {
-		//comment.setMessage(this);
 		this.comments.put(comment.getId(), comment);
 		return this.comments.get(comment.getId());
 	}

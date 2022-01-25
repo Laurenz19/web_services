@@ -2,7 +2,9 @@ package org.stockapp.web_services.model;
 
 import java.util.Date;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 public class Comment {
@@ -61,7 +63,9 @@ public class Comment {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-
+	
+	@JsonbTransient
+	@XmlTransient
 	public Message getMessage() {
 		return message;
 	}

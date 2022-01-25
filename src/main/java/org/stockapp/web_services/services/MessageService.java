@@ -73,6 +73,7 @@ public class MessageService {
 			messages.put(message.getId(), message);
 			for(int n=1; n<3; n++) {
 				Comment comment = new Comment("Message -"+ n, "laurenzio");
+				comment.setId((long) (message.getComments().size() + 1));
 				message.addComment(comment);
 			}
 		}
