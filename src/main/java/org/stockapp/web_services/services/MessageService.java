@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.stockapp.web_services.database.Database;
+import org.stockapp.web_services.exception.DataNotFoundException;
 import org.stockapp.web_services.model.Comment;
 import org.stockapp.web_services.model.Message;
 
@@ -34,7 +35,11 @@ public class MessageService {
 	}
 	
 	public Message getMessage(Long id) {
-		return messages.get(id);
+		Message message = messages.get(id);
+		if(message == null) {
+			throw new DataNotFoundException(String.format("Message with id %02d is not found", id));
+		}
+		return message;
 	}
 	
 	public Message addMessage(Message message) {
