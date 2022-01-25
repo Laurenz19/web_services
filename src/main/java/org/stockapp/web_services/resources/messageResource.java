@@ -1,5 +1,6 @@
 package org.stockapp.web_services.resources;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,11 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
 
 @Path("messages")
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,10 +51,43 @@ public class messageResource {
 		return this.messageService.getMessage(id);
 	}
 	
+	/*
+	Method 1:
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Message addMessage(Message message) {
-		return this.messageService.addMessage(message);
+	public Response addMessage(Message message) throws URISyntaxException {
+		message =this.messageService.addMessage(message);
+		return Response.created( new URI("/web_services/webapi/messages/" + message.getId()))
+				       .entity(message)
+				       .build();
+	}
+	
+	Method 2:
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addMessage(Message message, @Context UriInfo uriInfo) throws URISyntaxException {
+		message =this.messageService.addMessage(message);
+		String uri = uriInfo.getAbsolutePath().toString();
+		return Response.created( new URI(uri + message.getId()))
+				       .entity(message)
+				       .build();
+	}
+	*/
+	
+	/**
+	 * Here is another way add location
+	 * The methods above are not really practical   
+	 * (Recommended)
+	 **/
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addMessage(Message message, @Context UriInfo uriInfo){
+		message =this.messageService.addMessage(message);
+		String new_id = String.valueOf(message.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(new_id).build();
+		return Response.created(uri)
+				       .entity(message)
+				       .build();
 	}
 	
 	@PUT
