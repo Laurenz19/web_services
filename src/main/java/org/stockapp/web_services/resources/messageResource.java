@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.stockapp.web_services.model.Comment;
 import org.stockapp.web_services.model.Message;
 import org.stockapp.web_services.resources.beans.MessageFilterBean;
 import org.stockapp.web_services.services.MessageService;
@@ -93,15 +92,21 @@ public class messageResource {
 	@PUT
 	@Path("/{messageId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Message updateMessage(Message message, @PathParam("messageId") Long id) {
+	public Response updateMessage(Message message, @PathParam("messageId") Long id) {
 		message.setId(id);
-		return this.messageService.updateMessage(message);
+		message = this.messageService.updateMessage(message);
+		return Response.ok()
+				       .entity(message)
+				       .build();
 	}
 	
 	@DELETE
 	@Path("/{messageId}")
-	public List<Message> messageMessage(@PathParam("messageId") Long id) {
-		return this.messageService.removeMessage(this.messageService.getMessage(id));
+	public Response messageMessage(@PathParam("messageId") Long id) {
+		//this.messageService.removeMessage(this.messageService.getMessage(id));
+		return Response.noContent()
+				       .entity(this.messageService.removeMessage(this.messageService.getMessage(id)))
+				       .build();
 	}
 	
 	
