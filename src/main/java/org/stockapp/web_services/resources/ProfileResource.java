@@ -16,7 +16,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("profiles")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces( value = {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 public class ProfileResource {
 	
 	ProfileService profileService = new ProfileService();

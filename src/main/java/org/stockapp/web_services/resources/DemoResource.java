@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 @Path("demo")
 @Consumes(MediaType.TEXT_PLAIN)
-@Produces(MediaType.TEXT_PLAIN)
+@Produces( value = {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 public class DemoResource {
 	
 	/**
